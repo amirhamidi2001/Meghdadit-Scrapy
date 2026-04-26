@@ -1,40 +1,52 @@
-```markdown
-# Meghdadit Scrapy
+# Meghdadit Scrapy Spider
 
-A Scrapy spider that extracts product data from [meghdadit.com](https://meghdadit.com) and stores it in MongoDB.
+A Scrapy-based project for extracting product data from [meghdadit.com](https://meghdadit.com)  
+and storing it in a MongoDB database.
 
-## Features
+---
 
-- Extracts product title, ID, URL, categories, currency, and availability
-- Saves data to MongoDB
-- Respects `robots.txt`
+## ✨ Features
 
-## Requirements
+- Crawls all product categories and paginated pages
+- Extracts:
+  - Product title
+  - Product ID
+  - URL
+  - Categories
+  - Currency
+  - Availability status
+- Saves items to MongoDB using a dedicated pipeline
+- Fully respects `robots.txt`
+
+---
+
+## 🛠 Requirements
 
 - Python 3.8+
-- MongoDB running locally (or update `MONGODB_URI` in `settings.py`)
+- MongoDB (local or remote)
+- Dependencies listed in `requirements.txt`
 
-## Installation
+---
+
+## 📦 Installation
 
 ```bash
 git clone https://github.com/amirhamidi2001/Meghdadit-Scrapy.git
 cd Meghdadit-Scrapy
-pip install scrapy pymongo
+pip install -r requirements.txt
 ```
 
-## Usage
+Make sure your MongoDB service is running before starting the spider.
 
-Run the spider:
+---
 
-```bash
-scrapy crawl meghdadit
+## ⚙️ Configuration
+
+Edit the following file to adjust your MongoDB connection settings:
+
 ```
-
-Data will be saved in the `meghdadit` database, `items` collection.
-
-## Configuration
-
-Edit `meghdadit/settings.py` to change MongoDB connection or collection name:
+meghdadit/meghdadit/settings.py
+```
 
 ```python
 MONGODB_URI = "mongodb://localhost:27017"
@@ -42,19 +54,63 @@ MONGODB_DATABASE = "meghdadit"
 MONGODB_COLLECTION = "items"
 ```
 
-## Project Structure
+---
+
+## ▶️ Usage
+
+```bash
+cd meghdadit
+scrapy crawl meghdadit
+```
+
+The scraped data will be stored in your MongoDB database  
+under the configured database and collection names.
+
+---
+
+## 📁 Project Structure
 
 ```
+.
+├── LICENSE
 ├── meghdadit/
-│   ├── spiders/
-│   │   └── meghdadit_spider.py   # main spider
-│   ├── items.py                  # item definition
-│   ├── pipelines.py              # MongoDB pipeline
-│   └── settings.py
+│   ├── meghdadit/
+│   │   ├── __init__.py
+│   │   ├── items.py
+│   │   ├── middlewares.py
+│   │   ├── pipelines.py
+│   │   ├── settings.py
+│   │   └── spiders/
+│   │       ├── meghdadit_spider.py
+│   │       ├── plugins.py
+│   │       └── __init__.py
+│   └── scrapy.cfg
+├── requirements.txt
 └── README.md
 ```
 
-## License
+---
 
-MIT
+## 🗄 Database
+
+The MongoDB pipeline is implemented in:
+
 ```
+meghdadit/meghdadit/pipelines.py
+```
+
+You can customize how items are processed or inserted into MongoDB here.
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.  
+See the `LICENSE` file for details.
+
+---
+
+## 👤 Author
+
+**Amir Hamidi**  
+GitHub: [amirhamidi2001](https://github.com/amirhamidi2001)
